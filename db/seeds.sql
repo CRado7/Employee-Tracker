@@ -49,7 +49,7 @@ VALUES
 
 -- Creative Employees --
     ("Gandalf", "White", 7, NULL),
-    ("Gimli", "Greenleaf", 8, 8)
+    ("Gimli", "Greenleaf", 8, 8),
     ("Frodo", "Baggins", 9, 8),
 
 -- Project Manager Employees --
