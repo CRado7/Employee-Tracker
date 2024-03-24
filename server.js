@@ -133,9 +133,60 @@ const db = mysql.createConnection(
   };
 
   const addEmployee = () => {
-    connection.query()
+    connection.query('SELECT id, title FROM role', (res, err) => {
+        inquirer.prompt([
+            {
+                name: 'first_name',
+                type: 'input',
+                message: 'Enter first name.',
+            },
+            {
+                name: 'last_name',
+                type: 'input',
+                message: 'Enter last name.',
+            },
+            {
+                name: 'role',
+                type: 'input',
+                message: 'Select role for employee.',
+                choices: Object.keys(role_id.title),
+            },
+            {
+                name: 'manager',
+                type: 'input',
+                message: 'Enter manager ID.',
+            },
+        ])
+        .then(response => {
+            connection.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)',
+            [response.first_name, response.last_name, response.role_id.title, response.manager_id], function (res, err) {
+                console.log('Employee added!'),
+                mainMenu();
+            });
+        });
+    });
   };
 
   const updateEmployee = () => {
-    connection.query() 
+    connection.query('SELECT id, title FROM role', (res, err) => {
+        inquirer.prompt([
+            {
+                name: 'employee',
+                type: 'input',
+                message: 'Select employee to update.',
+            },
+            {
+                name: 'role',
+                type: 'input',
+                message: 'Select new role for employee.',
+                choices: Object.keys(role_id.title),
+            },
+        ])
+        .then(response => {
+            connection.query('UPDATE employee SET role_id = ? WHERE id = ?', [response.role_id.title, response.employee], function (res, err) {
+                console.log('Employee role updated!'),
+                mainMenu();
+            });
+        });
+    }); 
   };
