@@ -53,6 +53,7 @@ const db = mysql.createConnection(
 
   const viewAll = () => {
     connection.query(`SELECT * FROM department`, function (res, err) {
+        if (err) throw err;
         console.table(res);
         mainMenu();
     });
