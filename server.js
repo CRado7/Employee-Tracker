@@ -1,20 +1,27 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const consoleTable = require('console.table');
+require('dotenv').config();
 
 // Connect to database
 const db = mysql.createConnection(
     {
-      host: 'localhost',
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+        host: 'localhost',
+        database: process.env.DB_NAME,
+        password: process.env.DB_PASSWORD,
+        user: process.env.DB_USER,
     },
     console.log('Connected to the database!')
   );
 
+    db.connect(function (err) {
+        if (err) throw err;
+        console.log('Connected to the database!');
+        mainMenu();
+    });
+
   const mainMenu = () => {
-    inquirer.createPromptModule({
+    inquirer.prompt({
         message: 'Choose one of the following options',
         name: 'menu',
         type: 'list',
@@ -52,10 +59,9 @@ const db = mysql.createConnection(
   };
 
   const viewAll = () => {
-    connection.query(`SELECT * FROM department`, function (res, err) {
-        if (err) throw err;
+    db.query(`SELECT * FROM department`, function (res, err) {
         console.table(res);
-        mainMenu();
+        // mainMenu();
     });
   };
 
