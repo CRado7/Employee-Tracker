@@ -6,9 +6,9 @@ const consoleTable = require('console.table');
 const db = mysql.createConnection(
     {
       host: 'localhost',
-      user: DB_USER,
-      password: DB_PASSWORD,
-      database: DB_NAME,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
     },
     console.log('Connected to the database!')
   );
