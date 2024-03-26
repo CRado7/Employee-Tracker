@@ -61,7 +61,7 @@ const db = mysql.createConnection(
   const viewAll = () => {
     db.query(`SELECT * FROM department`, function (res, err) {
         console.table(res);
-        // mainMenu();
+        mainMenu();
     });
   };
 
